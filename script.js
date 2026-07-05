@@ -8,7 +8,6 @@ const nextMonthBtn = document.getElementById('nextMonth');
 const clockEl = document.getElementById('clock');
 
 let currentDate = new Date();
-let eventsByDate = {}; // 'YYYY-MM-DD' → true
 
 // ===== Utility =====
 function formatDateKey(date) {
@@ -68,12 +67,6 @@ function renderCalendar(withAnim = false) {
 
     dayDiv.textContent = day;
 
-    if (eventsByDate[dateKey]) {
-      const dot = document.createElement('div');
-      dot.classList.add('dot');
-      dayDiv.appendChild(dot);
-    }
-
     td.appendChild(dayDiv);
     row.appendChild(td);
 
@@ -81,12 +74,7 @@ function renderCalendar(withAnim = false) {
       calendarBody.appendChild(row);
       row = document.createElement('tr');
     }
-
-console.log(dateKey, {
-  weekday,
-  isHoliday: isJapaneseHoliday(date),
-  holidayObj: JapaneseHolidays.isHoliday(date)
-});  }
+  }
 
   if (row.children.length > 0) {
     while (row.children.length < 7) {
@@ -118,107 +106,19 @@ themeToggle.addEventListener('click', () => {
 prevMonthBtn.addEventListener('click', () => {
   currentDate.setMonth(currentDate.getMonth() - 1);
   renderCalendar(true);
-  loadEventsForCurrentMonth();
 });
 
 nextMonthBtn.addEventListener('click', () => {
   currentDate.setMonth(currentDate.getMonth() + 1);
   renderCalendar(true);
-  loadEventsForCurrentMonth();
 });
 
 todayBtn.addEventListener('click', () => {
   currentDate = new Date();
   renderCalendar(true);
-  loadEventsForCurrentMonth();
 });
-
-// ===== Google Calendar =====
-const googleAuthBtn = document.getElementById('googleAuthBtn');
-const reloadEventsBtn = document.getElementById('reloadEventsBtn');
-
-const CLIENT_ID = 'YOUR_CLIENT_ID.apps.googleusercontent.com';
-const API_KEY = 'YOUR_API_KEY';
-const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
-const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
-
-let gapiInited = false;
-let isSignedIn = false;
-
-function gapiLoaded() {
-  gapi.load('client:auth2', initClient);
-}
-
-function initClient() {
-  gapi.client.init({
-    apiKey: API_KEY,
-    clientId: CLIENT_ID,
-    discoveryDocs: DISCOVERY_DOCS,
-    scope: SCOPES,
-  }).then(() => {
-    gapiInited = true;
-    const auth = gapi.auth2.getAuthInstance();
-    isSignedIn = auth.isSignedIn.get();
-
-    auth.isSignedIn.listen((signedIn) => {
-      isSignedIn = signedIn;
-      if (signedIn) loadEventsForCurrentMonth();
-    });
-
-    if (isSignedIn) loadEventsForCurrentMonth();
-  });
-}
-
-googleAuthBtn.addEventListener('click', () => {
-  if (!gapiInited) return;
-  const auth = gapi.auth2.getAuthInstance();
-
-  if (!auth.isSignedIn.get()) {
-    auth.signIn();
-  } else {
-    auth.signOut();
-    eventsByDate = {};
-    renderCalendar();
-  }
-});
-
-reloadEventsBtn.addEventListener('click', () => {
-  if (isSignedIn) loadEventsForCurrentMonth();
-});
-
-function loadEventsForCurrentMonth() {
-  if (!gapiInited || !isSignedIn) return;
-
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-  const start = new Date(year, month, 1);
-  const end = new Date(year, month + 1, 0);
-
-  const timeMin = start.toISOString();
-  const timeMax = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 1).toISOString();
-
-  gapi.client.calendar.events.list({
-    calendarId: 'primary',
-    timeMin,
-    timeMax,
-    showDeleted: false,
-    singleEvents: true,
-    orderBy: 'startTime',
-  }).then(response => {
-    eventsByDate = {};
-    const events = response.result.items || [];
-
-    events.forEach(ev => {
-      let dateStr = ev.start.date || ev.start.dateTime?.substring(0, 10);
-      if (dateStr) eventsByDate[dateStr] = true;
-    });
-
-    renderCalendar();
-  });
-}
 
 // 初期化
 window.onload = () => {
   renderCalendar();
-  gapiLoaded();
 };
