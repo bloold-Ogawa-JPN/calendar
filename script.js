@@ -82,6 +82,9 @@ function renderCalendar(withAnim = false) {
     }
     calendarBody.appendChild(row);
   }
+//ログ
+  console.log(dateKey, JapaneseHolidays.isHoliday(date));
+//ログ
 }
 
 // ===== Clock =====
