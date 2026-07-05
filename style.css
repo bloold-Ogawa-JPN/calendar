@@ -115,6 +115,13 @@ body.dark .day.holiday {
 body.dark .day.sat {
   color: var(--sat-color);
 }
+body.light .day.weekday {
+  color: var(--text-light); /* 黒 */
+}
+body.dark .day.weekday {
+  color: var(--text-dark); /* 白 */
+}
+
 
 /* Dot */
 .dot {
