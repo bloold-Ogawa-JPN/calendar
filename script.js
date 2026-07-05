@@ -20,6 +20,9 @@ function formatDateKey(date) {
 // 日本の祝日ライブラリ版
 function isJapaneseHoliday(date) {
   const h = JapaneseHolidays.isHoliday(date);
+      //ログ
+    console.log(dateKey,  h && h.name);
+    //ログ
   return h && h.name;  // name が存在する祝日のみ true
 }
 
