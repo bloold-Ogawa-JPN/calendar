@@ -98,7 +98,7 @@ table.calendar {
 }
 
 /* Light mode colors */
-body.light .day.weekday {
+body.light .day.weekday:not(.holiday) {
   color: var(--text-light);
 }
 body.light .day.sun,
@@ -109,9 +109,8 @@ body.light .day.sat {
   color: var(--sat-color);
 }
 
-
 /* Dark mode colors */
-body.dark .day.weekday {
+body.dark .day.weekday:not(.holiday) {
   color: var(--text-dark);
 }
 body.dark .day.sun,
