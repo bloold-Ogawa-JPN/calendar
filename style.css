@@ -106,6 +106,9 @@ body.light .day.holiday {
 body.light .day.sat {
   color: var(--sat-color);
 }
+body.light .day.weekday {
+  color: var(--text-light); /* 黒 */
+}
 
 /* Dark mode colors */
 body.dark .day.sun,
@@ -114,9 +117,6 @@ body.dark .day.holiday {
 }
 body.dark .day.sat {
   color: var(--sat-color);
-}
-body.light .day.weekday {
-  color: var(--text-light); /* 黒 */
 }
 body.dark .day.weekday {
   color: var(--text-dark); /* 白 */
