@@ -55,7 +55,6 @@ function renderCalendar(withAnim = false) {
 //ログ
 　  console.log(dateKey, JapaneseHolidays.isHoliday(date));
 //ログ
-
     const td = document.createElement('td');
     const dayDiv = document.createElement('div');
     dayDiv.classList.add('day');
