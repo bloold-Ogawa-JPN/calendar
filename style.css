@@ -31,8 +31,7 @@ body.dark {
   box-sizing: border-box;
 }
 
-.top-bar,
-.google-bar {
+.top-bar {
   display: flex;
   justify-content: center;
   gap: 8px;
@@ -107,7 +106,7 @@ body.light .day.sat {
   color: var(--sat-color);
 }
 body.light .day.weekday {
-  color: var(--text-light); /* 黒 */
+  color: var(--text-light);
 }
 
 /* Dark mode colors */
@@ -119,42 +118,7 @@ body.dark .day.sat {
   color: var(--sat-color);
 }
 body.dark .day.weekday {
-  color: var(--text-dark); /* 白 */
-}
-
-
-/* Dot */
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-top: 2px;
-  animation: dotPop 0.25s ease-out;
-}
-
-/* Dot weekday */
-body.light .day.weekday .dot {
-  background: var(--text-light);
-}
-body.dark .day.weekday .dot {
-  background: var(--text-dark);
-}
-
-/* Dot weekend */
-body.light .day.sun .dot,
-body.light .day.holiday .dot {
-  background: var(--sun-color);
-}
-body.light .day.sat .dot {
-  background: var(--sat-color);
-}
-
-body.dark .day.sun .dot,
-body.dark .day.holiday .dot {
-  background: var(--sun-color);
-}
-body.dark .day.sat .dot {
-  background: var(--sat-color);
+  color: var(--text-dark);
 }
 
 .clock {
@@ -182,15 +146,6 @@ body.dark .day.sat .dot {
 @keyframes todayPop {
   from {
     transform: scale(1.15);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-@keyframes dotPop {
-  from {
-    transform: scale(0.2);
   }
   to {
     transform: scale(1);
