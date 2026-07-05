@@ -1,0 +1,200 @@
+:root {
+  --bg-light: #fdfdfd;
+  --bg-dark: #222;
+  --text-light: #000;
+  --text-dark: #fff;
+  --sun-color: #e60000;
+  --sat-color: #0066cc;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+.calendar-app {
+  width: 100%;
+  max-width: 420px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.top-bar,
+.google-bar {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+button {
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #888;
+  background: transparent;
+  color: inherit;
+}
+
+.month-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.month-title {
+  font-size: 18px;
+  font-weight: 600;
+  animation: fadeIn 0.3s ease-out;
+}
+
+table.calendar {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 14px;
+}
+
+.calendar thead th {
+  padding: 4px 0;
+  text-align: center;
+  font-weight: 600;
+}
+
+.calendar tbody td {
+  height: 40px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.day {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  transition: transform 0.2s;
+}
+
+.day.today {
+  border: 2px solid #ff9900;
+  box-sizing: border-box;
+  animation: todayPop 0.3s ease-out;
+}
+
+/* Light mode colors */
+body.light .day.sun,
+body.light .day.holiday {
+  color: var(--sun-color);
+}
+body.light .day.sat {
+  color: var(--sat-color);
+}
+
+/* Dark mode colors */
+body.dark .day.sun,
+body.dark .day.holiday {
+  color: var(--sun-color);
+}
+body.dark .day.sat {
+  color: var(--sat-color);
+}
+
+/* Dot */
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 2px;
+  animation: dotPop 0.25s ease-out;
+}
+
+/* Dot weekday */
+body.light .day.weekday .dot {
+  background: var(--text-light);
+}
+body.dark .day.weekday .dot {
+  background: var(--text-dark);
+}
+
+/* Dot weekend */
+body.light .day.sun .dot,
+body.light .day.holiday .dot {
+  background: var(--sun-color);
+}
+body.light .day.sat .dot {
+  background: var(--sat-color);
+}
+
+body.dark .day.sun .dot,
+body.dark .day.holiday .dot {
+  background: var(--sun-color);
+}
+body.dark .day.sat .dot {
+  background: var(--sat-color);
+}
+
+.clock {
+  margin-top: 12px;
+  font-size: 20px;
+  text-align: center;
+}
+
+/* Slide animation */
+.calendar-body-anim {
+  animation: slideIn 0.25s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes todayPop {
+  from {
+    transform: scale(1.15);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes dotPop {
+  from {
+    transform: scale(0.2);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

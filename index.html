@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>スマホカレンダー</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- 日本の祝日ライブラリ -->
+  <script src="https://cdn.jsdelivr.net/npm/japanese-holidays@1.0.10/lib/japanese-holidays.min.js"></script>
+
+  <!-- Google API -->
+  <script src="https://apis.google.com/js/api.js"></script>
+</head>
+<body class="light">
+  <div class="calendar-app">
+
+    <div class="top-bar">
+      <button id="themeToggle">Dark / Light</button>
+      <button id="todayBtn">今日</button>
+    </div>
+
+    <div class="month-nav">
+      <button id="prevMonth">&lt;</button>
+      <div class="month-title" id="monthTitle"></div>
+      <button id="nextMonth">&gt;</button>
+    </div>
+
+    <table class="calendar">
+      <thead>
+        <tr>
+          <th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th>
+        </tr>
+      </thead>
+      <tbody id="calendarBody"></tbody>
+    </table>
+
+    <div class="google-bar">
+      <button id="googleAuthBtn">Googleカレンダー連携</button>
+      <button id="reloadEventsBtn">予定再読込</button>
+    </div>
+
+    <div class="clock" id="clock"></div>
+  </div>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+</body>
+</html>
