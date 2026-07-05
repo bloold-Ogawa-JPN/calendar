@@ -52,11 +52,13 @@ function renderCalendar(withAnim = false) {
     const date = new Date(year, month, day);
     const weekday = date.getDay();
     const dateKey = formatDateKey(date);
-//ログ
-　  console.log(dateKey, JapaneseHolidays.isHoliday(date));
-//ログ
     const td = document.createElement('td');
     const dayDiv = document.createElement('div');
+
+    //ログ
+　  console.log(dateKey, JapaneseHolidays.isHoliday(date));
+    //ログ
+
     dayDiv.classList.add('day');
 
     if (weekday === 0) dayDiv.classList.add('sun');
