@@ -1,162 +1,153 @@
+/* 基本リセットと共通変数 */
 :root {
-  --bg-light: #fdfdfd;
-  --bg-dark: #222;
-  --text-light: #000;
-  --text-dark: #fff;
-  --sun-color: #e60000;
-  --sat-color: #0066cc;
-}
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  background: var(--bg-light);
-  color: var(--text-light);
-  transition: background 0.3s, color 0.3s;
+  --bg-color: #f5f7fa;
+  --app-bg: #ffffff;
+  --text-color: #333333;
+  --border-color: #e0e0e0;
+  --primary-color: #007aff;
+  --sunday-color: #ff3b30;
+  --saturday-color: #007aff;
+  --holiday-color: #ff9500;
+  --today-bg: #e1f5fe;
 }
 
 body.dark {
-  background: var(--bg-dark);
-  color: var(--text-dark);
+  --bg-color: #1c1c1e;
+  --app-bg: #2c2c2e;
+  --text-color: #ffffff;
+  --border-color: #3a3a3c;
+  --primary-color: #0a84ff;
+  --sunday-color: #ff453a;
+  --saturday-color: #0a84ff;
+  --holiday-color: #ff9f0a;
+  --today-bg: #1c3d5a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  transition: background 0.3s, color 0.3s;
 }
 
 .calendar-app {
   width: 100%;
-  max-width: 420px;
-  padding: 12px;
-  box-sizing: border-box;
+  max-width: 414px; /* スマホ幅の基準 */
+  background: var(--app-bg);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 16px;
 }
 
+/* トップバー */
 .top-bar {
   display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 8px;
+  justify-content: space-between;
+  margin-bottom: 16px;
 }
 
 button {
+  background: var(--border-color);
+  color: var(--text-color);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
   font-size: 14px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #888;
-  background: transparent;
-  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
+button:active {
+  opacity: 0.7;
+}
+
+/* ナビゲーション */
 .month-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: 16px;
 }
 
 .month-title {
   font-size: 18px;
-  font-weight: 600;
-  animation: fadeIn 0.3s ease-out;
+  font-weight: bold;
 }
 
-table.calendar {
+/* カレンダーテーブル */
+.calendar {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 16px;
   table-layout: fixed;
-  font-size: 14px;
 }
 
-.calendar thead th {
-  padding: 4px 0;
+th, td {
   text-align: center;
-  font-weight: 600;
-}
-
-.calendar tbody td {
-  height: 40px;
-  text-align: center;
-  vertical-align: middle;
-}
-
-.day {
+  padding: 12px 0;
   position: relative;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  transition: transform 0.2s;
 }
 
-.day.today {
-  border: 2px solid #ff9900;
-  box-sizing: border-box;
-  animation: todayPop 0.3s ease-out;
+th {
+  font-size: 14px;
+  color: #8e8e93;
 }
 
-/* Light mode colors */
-body.light .day.weekday:not(.holiday) {
-  color: var(--text-light); 
-}  
-body.light .day.sun,
-body.light .day.holiday {
-  color: var(--sun-color) !important;
-}
-body.light .day.sat {
-  color: var(--sat-color);
+/* 曜日の色分け */
+th:nth-child(1) { color: var(--sunday-color); }
+th:nth-child(7) { color: var(--saturday-color); }
+
+td {
+  font-size: 16px;
+  height: 48px;
+  border-radius: 8px;
 }
 
-/* Dark mode colors */
-body.dark .day.sat {
-  color: var(--sat-color);
-}
-body.dark .day.weekday:not(.holiday) {
-  color: var(--text-dark);
-}
-body.dark .day.sun,
-body.dark .day.holiday {
-  color: var(--sun-color) !important;
+/* 日付の状態スタイル */
+.day-cell {
+  cursor: pointer;
 }
 
+.day-cell.empty {
+  cursor: default;
+}
+
+.day-cell.sunday { color: var(--sunday-color); }
+.day-cell.saturday { color: var(--saturday-color); }
+.day-cell.holiday { color: var(--holiday-color); }
+
+.day-cell.today {
+  background-color: var(--today-bg);
+  font-weight: bold;
+}
+
+/* 祝日名プレイスホルダー（必要に応じて表示） */
+.holiday-name {
+  display: block;
+  font-size: 9px;
+  color: var(--holiday-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* デジタル時計 */
 .clock {
-  margin-top: 12px;
-  font-size: 20px;
   text-align: center;
-}
-
-/* Slide animation */
-.calendar-body-anim {
-  animation: slideIn 0.25s ease-out;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes todayPop {
-  from {
-    transform: scale(1.15);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  font-size: 20px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  margin-top: 8px;
+  color: var(--text-color);
 }
