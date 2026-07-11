@@ -1,162 +1,333 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>カレンダー</title>
-   <!-- 祝日ライブラリ（最新版・確実に動く） -->
-      <script src="https://cdn.jsdelivr.net/npm/japanese-holidays/lib/japanese-holidays.min.js"></script>
-   <!-- 外部CSSの読み込み -->
-      <link rel="stylesheet" href="style.css">
-   <!-- 外部JavaScriptの読み込み -->
-      <script src="script.js"></script>
-      <link rel="manifest" href="manifest.json">
-      <link rel="apple-touch-icon" href="icon-192.png">
-      <meta name="theme-color" content="#ffffff">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0,
+                 maximum-scale=1.0, user-scalable=no">
 
-  <script>
-     if ("serviceWorker" in navigator) {
-       window.addEventListener("load", () => {
-         navigator.serviceWorker.register("/service-worker.js");
-       });
-     }
-  </script>
+  <title>カレンダー</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- 祝日ライブラリ -->
+  <script src="https://cdn.jsdelivr.net/npm/japanese-holidays/lib/japanese-holidays.min.js"></script>
+
   <style>
-     body {    font-family: sans-serif;    margin: 0;    padding: 20px;  }
-     body.light {    background: #ffffff;    color: #333;  }
-     body.dark {    background: #222;    color: #eee;  }
-     #controls {    display: flex;    gap: 10px;    margin-bottom: 10px;  }
-     table {    width: 100%;    border-collapse: collapse;    margin-top: 10px;  }
-     th {    padding: 8px;    background: #ddd;    font-size: 16px;  }
-     td {    width: 14.2%;    height: 70px;    text-align: center;    vertical-align: top;    padding: 4px;    border: 1px solid #ccc;  }
-     .day-cell {    font-size: 20px;    position: relative;  }
-     .empty {    background: #f0f0f0;  }
-     .sunday {    color: red;  }
-     .saturday {    color: blue;  }
-     .today {    background: orange;    color: white !important;    border-radius: 4px;    font-weight: bold;  }
-     .holiday {    color: red !important;    font-weight: bold;  }
-     .holiday-name {    display: block;    font-size: 10px;    margin-top: 2px;  }
+    /* ============================
+       Light / Dark モード
+    ============================ */
+    body.light {
+      background: #ffffff;
+      color: #333;
+    }
+
+    body.dark {
+      background: #222;
+      color: #eee;
+    }
+
+    /* ============================
+       レイアウト
+    ============================ */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      margin: 0;
+      padding: 20px;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* ============================
+       カレンダー表
+    ============================ */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th {
+      padding: 8px;
+      background: #ddd;
+      font-size: 16px;
+    }
+
+    td {
+      width: 14.2%;
+      height: 70px;
+      text-align: center;
+      vertical-align: top;
+      padding: 4px;
+      border: 1px solid #ccc;
+    }
+
+    /* ============================
+       日付セル
+    ============================ */
+    .day-cell {
+      font-size: 20px;
+      position: relative;
+    }
+
+    .empty {
+      background: #f0f0f0;
+    }
+
+    /* ============================
+       曜日色
+    ============================ */
+    .sunday {
+      color: red;
+    }
+
+    .saturday {
+      color: blue;
+    }
+
+    /* ============================
+       今日
+    ============================ */
+    .today {
+      background: orange;
+      color: white !important;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    /* ============================
+       祝日
+    ============================ */
+    .holiday {
+      color: red !important;
+      font-weight: bold;
+    }
+
+    .holiday-name {
+      display: block;
+      font-size: 10px;
+      margin-top: 2px;
+    }
+
+    /* ============================
+       iPhone 横向き専用レイアウト
+    ============================ */
+    @media (orientation: landscape) and (max-height: 450px) {
+
+      body {
+        padding: 0px;
+      }
+
+      #controls {
+        gap: 2px;
+        margin-bottom: 0px;
+      }
+
+      button {
+        padding: 1px 4px;
+        font-size: 9px;
+        line-height: 1.0;
+      }
+
+      #monthtitle {
+        font-size: 12px;
+      }
+
+      table {
+        margin-top: 0px;
+      }
+
+      th {
+        padding: 1px;
+        font-size: 9px;
+      }
+
+      td {
+        height: 16px;
+        padding: 0px;
+      }
+
+      .day-cell {
+        font-size: 10px;
+      }
+
+      .holiday-name {
+        font-size: 5px;
+        margin-top: 0px;
+      }
+    }
+
+    /* ============================
+       iPhone SE / mini 専用
+    ============================ */
+    @media (orientation: landscape) and (max-height: 380px) {
+
+      td {
+        height: 14px;
+        padding: 0;
+      }
+
+      .day-cell {
+        font-size: 9px;
+      }
+
+      th {
+        font-size: 8px;
+        padding: 1px;
+      }
+
+      button {
+        font-size: 8px;
+        padding: 1px 3px;
+      }
+
+      #monthtitle {
+        font-size: 11px;
+      }
+    }
   </style>
 </head>
-  
+
 <body class="light">
-<div id="controls">
-  <button id="themetoggle">Dark / Light</button>
-  <button id="prevmonth">＜</button>
-  <span id="monthtitle"></span>
-  <button id="nextmonth">＞</button>
-  <button id="todaybtn">今日</button>
-</div>
-<table>
-  <thead>
-    <tr>
-      <th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th>
-    </tr>
-  </thead>
-  <tbody id="calendarbody"></tbody>
-</table>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const themeToggle = document.getElementById("themetoggle");
-  const todayBtn = document.getElementById("todaybtn");
-  const prevMonthBtn = document.getElementById("prevmonth");
-  const nextMonthBtn = document.getElementById("nextmonth");
-  const monthTitle = document.getElementById("monthtitle");
-  const calendarBody = document.getElementById("calendarbody");
-  
-  let currentDate = new Date();
+  <div id="controls">
+    <button id="themeToggle">Dark / Light</button>
+    <button id="prevmonth"><</button>
+    <span id="monthtitle"></span>
+    <button id="nextmonth">></button>
+    <button id="todayBtn">今日</button>
+  </div>
 
-  themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    document.body.classList.toggle("light");
-  });
+  <table>
+    <thead>
+      <tr>
+        <th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th>
+      </tr>
+    </thead>
+    <tbody id="calendarbody"></tbody>
+  </table>
 
-  function renderCalendar(date) {
-    calendarBody.innerHTML = "";
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
 
-    const year = date.getFullYear();
-    const month = date.getMonth();
+      const themeToggle = document.getElementById("themeToggle");
+      const todayBtn = document.getElementById("todayBtn");
+      const prevBtn = document.getElementById("prevmonth");
+      const nextBtn = document.getElementById("nextmonth");
+      const monthTitle = document.getElementById("monthtitle");
+      const calendarBody = document.getElementById("calendarbody");
 
-    monthTitle.textContent = `${year}年${month + 1}月`;
+      let current = new Date();
 
-    const firstDayIndex = new Date(year, month, 1).getDay();
-    const lastDay = new Date(year, month + 1, 0).getDate();
+      function renderCalendar() {
+        const year = current.getFullYear();
+        const month = current.getMonth();
 
-    let dateCounter = 1;
-    const today = new Date();
+        monthTitle.textContent = `${year}年${month + 1}月`;
 
-    for (let i = 0; i < 6; i++) {
-      const row = document.createElement("tr");
-      let hasCells = false;
+        calendarBody.innerHTML = "";
 
-      for (let j = 0; j < 7; j++) {
-        const cell = document.createElement("td");
+        const firstDay = new Date(year, month, 1).getDay();
+        const lastDate = new Date(year, month + 1, 0).getDate();
 
-        if (i === 0 && j < firstDayIndex) {
-          cell.classList.add("day-cell", "empty");
-        } else if (dateCounter > lastDay) {
-          cell.classList.add("day-cell", "empty");
-        } else {
-          hasCells = true;
-          const loopDate = new Date(year, month, dateCounter);
+        let row = document.createElement("tr");
+
+        for (let i = 0; i < firstDay; i++) {
+          const td = document.createElement("td");
+          td.classList.add("empty");
+          row.appendChild(td);
+        }
+
+        for (let date = 1; date <= lastDate; date++) {
+          if (row.children.length === 7) {
+            calendarBody.appendChild(row);
+            row = document.createElement("tr");
+          }
+
+          const td = document.createElement("td");
+          const cell = document.createElement("div");
           cell.classList.add("day-cell");
+          cell.textContent = date;
 
-          const dateText = document.createElement("span");
-          dateText.textContent = dateCounter;
-          cell.appendChild(dateText);
+          const dow = new Date(year, month, date).getDay();
+          if (dow === 0) cell.classList.add("sunday");
+          if (dow === 6) cell.classList.add("saturday");
 
-          if (j === 0) cell.classList.add("sunday");
-          if (j === 6) cell.classList.add("saturday");
+          const holiday = JapaneseHolidays.isHoliday(new Date(year, month, date));
+          if (holiday) {
+            cell.classList.add("holiday");
+            const hn = document.createElement("span");
+            hn.classList.add("holiday-name");
+            hn.textContent = holiday;
+            cell.appendChild(hn);
+          }
 
+          const today = new Date();
           if (
-            year === today.getFullYear() &&
+            date === today.getDate() &&
             month === today.getMonth() &&
-            dateCounter === today.getDate()
+            year === today.getFullYear()
           ) {
             cell.classList.add("today");
           }
 
-          if (typeof window.JapaneseHolidays !== "undefined") {
-            const holidayName = window.JapaneseHolidays.isHoliday(loopDate);
-            if (holidayName) {
-              cell.classList.add("holiday");
-              const label = document.createElement("span");
-              label.classList.add("holiday-name");
-              label.textContent = holidayName;
-              cell.appendChild(label);
-            }
-          }
-
-          dateCounter++;
+          td.appendChild(cell);
+          row.appendChild(td);
         }
 
-        row.appendChild(cell);
+        calendarBody.appendChild(row);
       }
 
-      if (!hasCells && i > 0) break;
-      calendarBody.appendChild(row);
+      themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        document.body.classList.toggle("light");
+      });
+
+      todayBtn.addEventListener("click", () => {
+        current = new Date();
+        renderCalendar();
+      });
+
+      prevBtn.addEventListener("click", () => {
+        current.setMonth(current.getMonth() - 1);
+        renderCalendar();
+      });
+
+      nextBtn.addEventListener("click", () => {
+        current.setMonth(current.getMonth() + 1);
+        renderCalendar();
+      });
+
+      renderCalendar();
+    });
+
+    /* PWA Service Worker 登録 */
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/service-worker.js");
+      });
     }
-  }
-
-  prevMonthBtn.addEventListener("click", () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar(currentDate);
-  });
-
-  nextMonthBtn.addEventListener("click", () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    renderCalendar(currentDate);
-  });
-
-  todayBtn.addEventListener("click", () => {
-    currentDate = new Date();
-    renderCalendar(currentDate);
-  });
-
-  renderCalendar(currentDate);
-});
-</script>
+  </script>
 
 </body>
 </html>
