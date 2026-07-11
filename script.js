@@ -17,18 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.toggle("light");
   });
 
-  // 2. 時計機能
-  function updateClock() {
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    clockEl.textContent = `${hours}:${minutes}:${seconds}`;
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  // 3. カレンダー描画ロジック
+  // 2. カレンダー描画ロジック
   function renderCalendar(date) {
     calendarBody.innerHTML = "";
     
@@ -112,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 4. イベントリスナー
+  // 3. イベントリスナー
   prevMonthBtn.addEventListener("click", () => {
     currentDate.setMonth(currentDate.getMonth() - 1);
     renderCalendar(currentDate);
