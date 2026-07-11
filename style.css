@@ -15,9 +15,15 @@ body.dark {
    レイアウト
 ============================ */
 body {
-  font-family: sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   margin: 0;
   padding: 20px;
+}
+
+/* Safari の余白を削って高さを最大化 */
+html, body {
+  height: 100%;
+  overflow: hidden;
 }
 
 #controls {
@@ -105,7 +111,7 @@ td {
 }
 
 /* ============================
-   iPhone 横向き専用レイアウト
+   iPhone 横向き専用レイアウト（通常機種）
 ============================ */
 @media (orientation: landscape) and (max-height: 450px) {
 
@@ -137,9 +143,9 @@ td {
     font-size: 9px;
   }
 
-  /* ★ 最重要：高さをさらに縮める（最終版） */
+  /* ★ 最重要：高さ圧縮（通常機種） */
   td {
-    height: 16px;   /* ← これで6行全部確実に収まる */
+    height: 16px;
     padding: 0px;
   }
 
@@ -150,5 +156,34 @@ td {
   .holiday-name {
     font-size: 5px;
     margin-top: 0px;
+  }
+}
+
+/* ============================
+   iPhone SE / mini 専用（さらに高さが小さい機種）
+============================ */
+@media (orientation: landscape) and (max-height: 380px) {
+
+  td {
+    height: 14px;   /* ← SE / mini でも確実に6段入る */
+    padding: 0;
+  }
+
+  .day-cell {
+    font-size: 9px;
+  }
+
+  th {
+    font-size: 8px;
+    padding: 1px;
+  }
+
+  button {
+    font-size: 8px;
+    padding: 1px 3px;
+  }
+
+  #monthtitle {
+    font-size: 11px;
   }
 }
