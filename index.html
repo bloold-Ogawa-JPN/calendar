@@ -25,15 +25,27 @@
     color: #eee;
   }
 
+  #controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
   }
 
+  th {
+    padding: 8px;
+    background: #ddd;
+    font-size: 16px;
+  }
+
   td {
     width: 14.2%;
-    height: 60px;
+    height: 70px;
     text-align: center;
     vertical-align: top;
     padding: 4px;
@@ -59,8 +71,9 @@
 
   .today {
     background: orange;
-    color: white;
+    color: white !important;
     border-radius: 4px;
+    font-weight: bold;
   }
 
   .holiday {
@@ -72,12 +85,6 @@
     display: block;
     font-size: 10px;
     margin-top: 2px;
-  }
-
-  #controls {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
   }
 
   #clock {
@@ -120,13 +127,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentDate = new Date();
 
-  // ダークモード切り替え
   themeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark");
     document.body.classList.toggle("light");
   });
 
-  // 時計
   function updateClock() {
     const now = new Date();
     clockEl.textContent =
@@ -137,7 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(updateClock, 1000);
   updateClock();
 
-  // カレンダー描画
   function renderCalendar(date) {
     calendarBody.innerHTML = "";
 
@@ -147,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     monthTitle.textContent = `${year}年${month + 1}月`;
 
     const firstDayIndex = new Date(year, month, 1).getDay();
-    const lastDay = new Date(year, month + 1, 0).getDate();  // ← 正しい月末
+    const lastDay = new Date(year, month + 1, 0).getDate();
 
     let dateCounter = 1;
     const today = new Date();
@@ -183,7 +187,6 @@ document.addEventListener("DOMContentLoaded", () => {
             cell.classList.add("today");
           }
 
-          // 祝日判定
           if (typeof window.JapaneseHolidays !== "undefined") {
             const holidayName = window.JapaneseHolidays.isHoliday(loopDate);
             if (holidayName) {
@@ -206,7 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 月移動
   prevMonthBtn.addEventListener("click", () => {
     currentDate.setMonth(currentDate.getMonth() - 1);
     renderCalendar(currentDate);
