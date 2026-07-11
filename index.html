@@ -58,16 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.toggle("light");
   });
 
-  function updateClock() {
-    const now = new Date();
-    clockEl.textContent =
-      `${String(now.getHours()).padStart(2,'0')}:` +
-      `${String(now.getMinutes()).padStart(2,'0')}:` +
-      `${String(now.getSeconds()).padStart(2,'0')}`;
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
   function renderCalendar(date) {
     calendarBody.innerHTML = "";
 
