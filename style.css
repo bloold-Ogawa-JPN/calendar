@@ -110,12 +110,12 @@ td {
 @media (orientation: landscape) and (max-height: 450px) {
 
   body {
-    padding: 2px;
+    padding: 0px;
   }
 
   #controls {
     gap: 3px;
-    margin-bottom: 1px;
+    margin-bottom: 0px;
   }
 
   button {
@@ -129,7 +129,7 @@ td {
   }
 
   table {
-    margin-top: 1px;
+    margin-top: 0px;
   }
 
   th {
@@ -137,14 +137,14 @@ td {
     font-size: 10px;
   }
 
-  /* ← 最重要：高さを半分にする */
+  /* ★ 最重要：高さを半分以下にする ★ */
   td {
-    height: 22px;   /* ★ これで6行全部入る ★ */
+    height: 20px;   /* ← これで6行全部確実に収まる */
     padding: 0px;
   }
 
   .day-cell {
-    font-size: 12px; /* ← さらに圧縮 */
+    font-size: 11px; /* ← さらに圧縮 */
   }
 
   .holiday-name {
@@ -152,4 +152,3 @@ td {
     margin-top: 0px;
   }
 }
-
