@@ -20,7 +20,7 @@ function formatDateKey(date) {
 // 日本の祝日ライブラリ版
 function isJapaneseHoliday(date) {
   const h = JapaneseHolidays.isHoliday(date);
-  return h && h.name;  // name が存在する祝日のみ true
+  return h;  // name が存在する祝日のみ true
 }
 
 // ===== Calendar Rendering =====
