@@ -103,7 +103,7 @@ body.light .day.weekday:not(.holiday) {
 }  
 body.light .day.sun,
 body.light .day.holiday {
-  color: var(--sun-color); !important;
+  color: var(--sun-color) !important;
 }
 body.light .day.sat {
   color: var(--sat-color);
@@ -118,7 +118,7 @@ body.dark .day.weekday:not(.holiday) {
 }
 body.dark .day.sun,
 body.dark .day.holiday {
-  color: var(--sun-color); !important;
+  color: var(--sun-color) !important;
 }
 
 .clock {
