@@ -11,6 +11,17 @@ body.dark {
   color: #eee;
 }
 
+/* 曜日（th）も Light/Dark に対応 */
+body.light th {
+  background: #ddd;
+  color: #333;
+}
+
+body.dark th {
+  background: #444;
+  color: #eee;
+}
+
 /* ============================
    レイアウト
 ============================ */
@@ -19,7 +30,7 @@ body {
   margin: 0;
   padding: 20px;
 
-  /* Safari の自動ズーム防止（最重要） */
+  /* Safari の自動ズーム防止 */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -53,17 +64,7 @@ table {
 
 th {
   padding: 8px;
-  background: #ddd;
   font-size: 16px;
-}
-body.light th {
-  background: #ddd;
-  color: #333;
-}
-
-body.dark th {
-  background: #444;
-  color: #eee;
 }
 
 td {
@@ -123,7 +124,8 @@ td {
 }
 
 /* ============================
-   iPhone 横向き専用レイアウト（通常機種）
+   iPhone 横向き（通常機種）
+   → 小さすぎ問題を解消した新サイズ
 ============================ */
 @media (orientation: landscape) and (max-height: 450px) {
 
@@ -132,70 +134,88 @@ td {
   }
 
   #controls {
-    gap: 2px;
-    margin-bottom: 0px;
+    gap: 4px;
+    margin-bottom: 2px;
   }
 
   button {
-    padding: 1px 4px;
-    font-size: 9px;
-    line-height: 1.0;
+    padding: 2px 6px;
+    font-size: 11px;
+    line-height: 1.1;
   }
 
   #monthtitle {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   table {
-    margin-top: 0px;
+    margin-top: 2px;
   }
 
   th {
-    padding: 1px;
-    font-size: 9px;
+    padding: 2px;
+    font-size: 12px;
   }
 
-  /* ★ 最重要：横向きで6段すべて収める高さ */
+  /* ★ 読みやすさを保ちつつ6段収まる最適値 */
   td {
-    height: 16px;
+    height: 22px;
     padding: 0px;
+  }
+
+  .day-cell {
+    font-size: 12px;
+  }
+
+  .holiday-name {
+    font-size: 6px;
+    margin-top: 0px;
+  }
+}
+
+/* ============================
+   iPhone mini / SE 第2〜3世代
+   → 中間サイズ
+============================ */
+@media (orientation: landscape) and (max-height: 410px) {
+
+  td {
+    height: 20px;
+  }
+
+  .day-cell {
+    font-size: 11px;
+  }
+
+  th {
+    font-size: 10px;
+  }
+}
+
+/* ============================
+   iPhone SE（旧機種）
+   → 最小サイズ（でも読める）
+============================ */
+@media (orientation: landscape) and (max-height: 380px) {
+
+  td {
+    height: 18px;
   }
 
   .day-cell {
     font-size: 10px;
   }
 
-  .holiday-name {
-    font-size: 5px;
-    margin-top: 0px;
-  }
-}
-
-/* ============================
-   iPhone SE / mini 専用（さらに高さが小さい機種）
-============================ */
-@media (orientation: landscape) and (max-height: 380px) {
-
-  td {
-    height: 14px;
-    padding: 0;
-  }
-
-  .day-cell {
+  th {
     font-size: 9px;
   }
 
-  th {
-    font-size: 8px;
-    padding: 1px;
-  }
-
   button {
-    font-size: 8px;
-    padding: 1px 3px;
+    font-size: 9px;
+    padding: 1px 4px;
   }
 
   #monthtitle {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
