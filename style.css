@@ -100,18 +100,18 @@ table.calendar {
 /* Light mode colors */
 body.light .day.sun,
 body.light .day.holiday {
-  color: var(--sun-color);
+  color: var(--sun-color); !important;
 }
 body.light .day.sat {
   color: var(--sat-color);
 }
 body.light .day.weekday:not(.holiday) {
-  color: var(--text-light);
-}
+  color: var(--text-light); 
+  
 /* Dark mode colors */
 body.dark .day.sun,
 body.dark .day.holiday {
-  color: var(--sun-color);
+  color: var(--sun-color); !important;
 }
 body.dark .day.sat {
   color: var(--sat-color);
