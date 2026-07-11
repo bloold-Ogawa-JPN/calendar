@@ -56,6 +56,15 @@ th {
   background: #ddd;
   font-size: 16px;
 }
+body.light th {
+  background: #ddd;
+  color: #333;
+}
+
+body.dark th {
+  background: #444;
+  color: #eee;
+}
 
 td {
   width: 14.2%;
