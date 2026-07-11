@@ -1,13 +1,6 @@
 /* ============================
-   基本レイアウト
+   Light / Dark モード
 ============================ */
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 20px;
-}
-
-/* Light / Dark モード */
 body.light {
   background: #ffffff;
   color: #333;
@@ -19,8 +12,14 @@ body.dark {
 }
 
 /* ============================
-   コントロールボタン
+   レイアウト
 ============================ */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
 #controls {
   display: flex;
   gap: 10px;
@@ -91,7 +90,7 @@ td {
 }
 
 /* ============================
-   祝日
+   祝日（最優先で赤にする）
 ============================ */
 .holiday {
   color: red !important;
