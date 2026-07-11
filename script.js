@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextMonthBtn = document.getElementById("nextmonth");
   const monthTitle = document.getElementById("monthtitle");
   const calendarBody = document.getElementById("calendarbody");
-  const clockEl = document.getElementById("clock");
 
   // アプリの状態
   let currentDate = new Date();
