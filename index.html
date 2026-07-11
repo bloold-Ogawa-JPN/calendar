@@ -21,8 +21,7 @@
   .today {    background: orange;    color: white !important;    border-radius: 4px;    font-weight: bold;  }
   .holiday {    color: red !important;    font-weight: bold;  }
   .holiday-name {    display: block;    font-size: 10px;    margin-top: 2px;  }
-  #clock {    margin-top: 10px;    font-size: 24px;  }
-</style>
+  </style>
 </head>
 <body class="light">
 <div id="controls">
@@ -49,8 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextMonthBtn = document.getElementById("nextmonth");
   const monthTitle = document.getElementById("monthtitle");
   const calendarBody = document.getElementById("calendarbody");
-  const clockEl = document.getElementById("clock");
-
+  
   let currentDate = new Date();
 
   themeToggle.addEventListener("click", () => {
