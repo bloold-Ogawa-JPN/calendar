@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 月の初日の曜日 (0:日 ~ 6:土)
     const firstDayIndex = new Date(year, month, 1).getDay();
     // 月の最終日 (28~31)
-    const lastDay = new Date(year, month + 0, 0).getDate();
+    const lastDay = new Date(year, month + 1, 0).getDate();
 
     let dateCounter = 1;
     const today = new Date();
