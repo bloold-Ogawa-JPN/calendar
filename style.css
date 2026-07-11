@@ -110,46 +110,46 @@ td {
 @media (orientation: landscape) and (max-height: 450px) {
 
   body {
-    padding: 4px;
+    padding: 2px;
   }
 
   #controls {
-    gap: 4px;
-    margin-bottom: 2px;
+    gap: 3px;
+    margin-bottom: 1px;
   }
 
   button {
-    padding: 2px 6px;
-    font-size: 11px;
-    line-height: 1.2;
+    padding: 2px 5px;
+    font-size: 10px;
+    line-height: 1.1;
   }
 
   #monthtitle {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   table {
-    margin-top: 2px;
+    margin-top: 1px;
   }
 
   th {
-    padding: 2px;
-    font-size: 11px;
+    padding: 1px;
+    font-size: 10px;
   }
 
-  /* ← ここをさらに縮める（最重要） */
+  /* ← 最重要：高さを半分にする */
   td {
-    height: 30px;   /* 34px → 30px に変更 */
-    padding: 1px;
+    height: 22px;   /* ★ これで6行全部入る ★ */
+    padding: 0px;
   }
 
   .day-cell {
-    font-size: 13px; /* ← 14px → 13px に微調整 */
+    font-size: 12px; /* ← さらに圧縮 */
   }
 
   .holiday-name {
-    font-size: 7px;
-    margin-top: 1px;
+    font-size: 6px;
+    margin-top: 0px;
   }
 }
 
