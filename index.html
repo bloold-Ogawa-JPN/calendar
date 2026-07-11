@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>スマホカレンダー</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>カレンダー</title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css" />
-  
-  <!-- 日本の祝日ライブラリ -->
-  <script src="https://cdn.jsdelivr.net/npm/japanese-holidays@1.0.10/lib/japanese-holidays.min.js"></script> 
+<!-- 祝日ライブラリ（最新版・確実に動く） -->
+<script src="https://cdn.jsdelivr.net/npm/japanese-holidays/lib/japanese-holidays.min.js"></script>
 
-</head>
-<body class="light">
-  <div class="calendar-app">
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
 
-    <div class="top-bar">
-      <button id="themeToggle">Dark / Light</button>
-      <button id="todayBtn">今日</button>
-    </div>
+  body.light {
+    background: #ffffff;
+    color: #333;
+  }
 
-    <div class="month-nav">
-      <button id="prevMonth">&lt;</button>
-      <div class="month-title" id="monthTitle"></div>
-      <button id="nextMonth">&gt;</button>
-    </div>
+  body.dark {
+    background: #222;
+    color: #eee;
+  }
 
-    <table class="calendar">
-      <thead>
-        <tr>
-          <th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th>
-        </tr>
-      </thead>
-      <tbody id="calendarBody"></tbody>
-    </table>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
 
-    <div class="clock" id="clock"></div>
-  </div>
+  td {
+    width: 14.2%;
+    height: 60px;
+    text-align: center;
+    vertical-align: top;
+    padding: 4px;
+    border: 1px solid #ccc;
+  }
 
-  <!-- JS -->
-  <script src="script.js"></script>
-</body>
-</html>
+  .day-cell {
+    font-size: 20px;
+    position: relative;
+  }
+
+  .empty {
+    background: #f0f0f0;
+  }
+
