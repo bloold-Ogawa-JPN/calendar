@@ -38,6 +38,9 @@ body {
 /* Safari の余白を削って高さを最大化 */
 html, body {
   height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
 
