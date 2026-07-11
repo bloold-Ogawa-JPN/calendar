@@ -104,3 +104,48 @@ td {
   margin-top: 2px;
 }
 
+/* ============================
+   iPhone 横向き専用レイアウト
+============================ */
+@media (orientation: landscape) and (max-height: 450px) {
+
+  body {
+    padding: 10px;
+  }
+
+  #controls {
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  button {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  #monthtitle {
+    font-size: 16px;
+  }
+
+  table {
+    margin-top: 4px;
+  }
+
+  th {
+    padding: 4px;
+    font-size: 12px;
+  }
+
+  td {
+    height: 42px; /* ← iPhone横向きで収まる高さ */
+    padding: 2px;
+  }
+
+  .day-cell {
+    font-size: 16px; /* ← 20px → 16px に縮小 */
+  }
+
+  .holiday-name {
+    font-size: 8px; /* ← 小さめに */
+  }
+}
