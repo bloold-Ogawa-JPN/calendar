@@ -35,7 +35,6 @@ body {
   text-size-adjust: 100%;
 }
 
-/* Safari の余白を削って高さを最大化 */
 html, body {
   height: 100%;
   width: 100%;
@@ -63,6 +62,7 @@ button {
 ============================ */
 table {
   width: 100%;
+  height: calc(100% - 60px); /* ボタン＋タイトル分を引く */
   border-collapse: collapse;
   margin-top: 10px;
 }
