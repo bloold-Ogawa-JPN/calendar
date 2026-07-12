@@ -1,8 +1,8 @@
 {
   "name": "カレンダー",
   "short_name": "カレンダー",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "/calendar/"
+  "scope": "/calendar/"
   "display": "fullscreen",
   "orientation": "portrait",
   "background_color": "#000000",
