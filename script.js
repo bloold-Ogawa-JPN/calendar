@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // DOM要素の取得
-  const themeToggle = document.getElementById("themetoggle");
-  const todayBtn = document.getElementById("todaybtn");
+  // DOM要素の取得（HTMLのIDの表記に合わせました）
+  const themeToggle = document.getElementById("themeToggle");
+  const todayBtn = document.getElementById("todayBtn");
   const prevMonthBtn = document.getElementById("prevmonth");
   const nextMonthBtn = document.getElementById("nextmonth");
   const monthTitle = document.getElementById("monthtitle");
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 月の初日の曜日 (0:日 ~ 6:土)
     const firstDayIndex = new Date(year, month, 1).getDay();
 
-    // 月の最終日（←あなたのコードの唯一のバグを修正）
+    // 月の最終日
     const lastDay = new Date(year, month + 1, 0).getDate();
 
     let dateCounter = 1;
