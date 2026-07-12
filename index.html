@@ -258,12 +258,14 @@
 
         let row = document.createElement("tr");
 
+        // 月の最初の空マスを埋める
         for (let i = 0; i < firstDay; i++) {
           const td = document.createElement("td");
           td.classList.add("empty");
           row.appendChild(td);
         }
 
+        // 日付を埋める
         for (let date = 1; date <= lastDate; date++) {
           if (row.children.length === 7) {
             calendarBody.appendChild(row);
@@ -298,6 +300,13 @@
           }
 
           td.appendChild(cell);
+          row.appendChild(td);
+        }
+
+        // 🛠️ 【修正箇所】月の終わりの空マスを土曜日まで埋める処理
+        while (row.children.length < 7) {
+          const td = document.createElement("td");
+          td.classList.add("empty");
           row.appendChild(td);
         }
 
