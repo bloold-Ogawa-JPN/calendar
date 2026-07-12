@@ -1,6 +1,10 @@
 /* ============================
-   ベース（ブラウザ・PWA共通） 26/07/12 12:41
+   ベース（ブラウザ・PWA共通） 26/07/12
 ============================ */
+*, *::before, *::after {
+  box-sizing: border-box; /* 余白によるサイズ崩れを完全に防ぐ */
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -8,26 +12,6 @@ html, body {
   width: 100%;
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-}
-
-/* ============================
-   ヘッダー（初期値）
-============================ */
-#controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px;
-  height: 50px; /* 縦の基準 */
-}
-
-#monthtitle {
-  font-size: 18px;
-}
-
-button {
-  font-size: 14px;
-  padding: 6px 10px;
 }
 
 /* ============================
@@ -45,117 +29,91 @@ th, td {
 }
 
 .day-cell {
-  font-size: 16px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 曜日・祝日の共通スタイル */
+.sunday { color: red; }
+.saturday { color: blue; }
+.holiday { color: red !important; font-weight: bold; }
+.holiday-name { display: block; font-size: 10px; margin-top: 2px; }
+.empty { background: #f0f0f0; }
+.today { background: orange; color: white !important; border-radius: 4px; font-weight: bold; }
+
+/* ============================
+   ★ 縦表示（初期値 / ポートレート）
+============================ */
+#controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  height: 50px; /* 縦のヘッダー高 */
+}
+
+#monthtitle { font-size: 18px; }
+button { font-size: 14px; padding: 6px 10px; cursor: pointer; }
+
+table {
+  height: calc(100% - 50px);
+}
+
+/* 🛠️【修正】テーブルの高さを単純に7等分（曜日+6行）する */
+tr {
+  height: calc(100% / 7);
+}
+
+th, td {
+  height: 100%;
+}
+
+.day-cell {
+  font-size: 15px;
 }
 
 /* ============================
-   ★ 縦表示（7行を確実に収める）
+   ★ 横表示（Safari・PWA・アスペクト比対応）
 ============================ */
-@media (orientation: portrait) {
+@media screen and (orientation: landscape), screen and (min-aspect-ratio: 1/1) {
 
-  #controls {
-    height: 50px;
-  }
-
-  table {
-    height: calc(100% - 50px);
-  }
-
-  /* ★ 曜日＋6行＝7行で割る（これが最重要） */
-  tr {
-    height: calc((100% - 50px) / 7);
-  }
-
-  th, td {
-    height: 100%;
-  }
-
-  .day-cell {
-    font-size: 15px;
-  }
-}
-
-/* ============================
-   ★ 横表示（ヘッダー3倍＋ノッチ余白）
-============================ */
-@media (orientation: landscape) {
-
-  /* ノッチの左右安全領域を確保 */
   body {
+    /* ノッチの左右安全領域を確保 */
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
 
   #controls {
-    height: 120px; /* ← 3倍の高さ */
+    height: 120px; /* 横向き時のヘッダー高 */
     gap: 20px;
     padding: 12px;
   }
 
   #monthtitle {
-    font-size: 36px; /* ← 3倍 */
+    font-size: 36px;
   }
 
   button {
-    font-size: 24px; /* ← 3倍 */
+    font-size: 24px;
     padding: 12px 24px;
   }
 
   table {
     height: calc(100% - 120px);
-    width: calc(100% - env(safe-area-inset-left) - env(safe-area-inset-right));
-    margin-left: env(safe-area-inset-left);
-    margin-right: env(safe-area-inset-right);
+    width: 100%; /* bodyのpaddingで制御されるため100%でOK */
+    margin: 0;
   }
 
-  /* ★ 横向きも必ず 7 行で割る（これが最重要） */
+  /* 🛠️【修正】横向きもヘッダーを引いた高さを単純に7等分する */
   tr {
-    height: calc((100% - 120px) / 7);
+    height: calc(100% / 7);
   }
 
   .day-cell {
     font-size: 20px;
   }
 }
-/* ============================
-   ★ 横向き判定（Safari・PWAでも確実に効く）
-============================ */
-@media screen and (min-aspect-ratio: 1/1) {
-
-  /* ノッチの左右安全領域を確保 */
-  body {
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-  }
-
-  #controls {
-    height: 120px; /* ← 3倍の高さ */
-    gap: 20px;
-    padding: 12px;
-  }
-
-  #monthtitle {
-    font-size: 36px !important; /* ← 強制上書き */
-  }
-
-  button {
-    font-size: 24px !important; /* ← 強制上書き */
-    padding: 12px 24px !important;
-  }
-
-  table {
-    height: calc(100% - 120px);
-    width: calc(100% - env(safe-area-inset-left) - env(safe-area-inset-right));
-    margin-left: env(safe-area-inset-left);
-    margin-right: env(safe-area-inset-right);
-  }
-
-  tr {
-    height: calc((100% - 120px) / 7) !important; /* ← 最終行が切れない */
-  }
-
-  .day-cell {
-    font-size: 20px !important;
-  }
-}
-
