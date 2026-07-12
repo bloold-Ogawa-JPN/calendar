@@ -1,8 +1,8 @@
 /* ============================
-   ベース（ブラウザ・PWA共通） 26/07/12
+   ベース（ブラウザ・PWA共通）
 ============================ */
 *, *::before, *::after {
-  box-sizing: border-box; /* 余白によるサイズ崩れを完全に防ぐ */
+  box-sizing: border-box;
 }
 
 html, body {
@@ -12,10 +12,53 @@ html, body {
   width: 100%;
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  transition: background 0.3s, color 0.3s; /* モード切り替えを滑らかに */
 }
 
 /* ============================
-   カレンダー表（共通）
+   ★ 【復活】Dark / Light モードの色定義
+============================ */
+body.light {
+  background: #ffffff;
+  color: #333333;
+}
+body.light table { border-color: #ccc; }
+body.light th { background: #eeeeee; color: #333; border-color: #ccc; }
+body.light td { border-color: #ccc; }
+body.light .empty { background: #f9f9f9; }
+
+body.dark {
+  background: #121212;
+  color: #ffffff;
+}
+body.dark table { border-color: #444; }
+body.dark th { background: #222222; color: #eee; border-color: #444; }
+body.dark td { border-color: #444; }
+body.dark .empty { background: #1a1a1a; }
+
+/* ============================
+   ★ テーマ切り替えボタン（文字なし・色のみ）
+============================ */
+.theme-dot-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #888;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+/* ライトモード時はボタンを「黒（ダーク）」にする（押すとダークになる暗示） */
+body.light .theme-dot-btn {
+  background: #222222;
+}
+/* ダークモード時はボタンを「白（ライト）」にする */
+body.dark .theme-dot-btn {
+  background: #ffffff;
+}
+
+/* ============================
+   カレンダー共通スタイル
 ============================ */
 table {
   width: 100%;
@@ -25,7 +68,7 @@ table {
 th, td {
   padding: 0;
   text-align: center;
-  border: 1px solid #ccc;
+  border: 1px solid;
 }
 
 .day-cell {
@@ -37,83 +80,105 @@ th, td {
   align-items: center;
 }
 
-/* 曜日・祝日の共通スタイル */
-.sunday { color: red; }
-.saturday { color: blue; }
-.holiday { color: red !important; font-weight: bold; }
+.sunday { color: #ff3b30; } /* iOS標準の赤 */
+.saturday { color: #007aff; } /* iOS標準の青 */
+.holiday { color: #ff3b30 !important; font-weight: bold; }
 .holiday-name { display: block; font-size: 10px; margin-top: 2px; }
-.empty { background: #f0f0f0; }
-.today { background: orange; color: white !important; border-radius: 4px; font-weight: bold; }
+.today { background: #ff9500; color: white !important; border-radius: 6px; font-weight: bold; }
 
 /* ============================
-   ★ 縦表示（初期値 / ポートレート）
+   縦表示（ポートレート）
 ============================ */
-#controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px;
-  height: 50px; /* 縦のヘッダー高 */
-}
+@media screen and (orientation: portrait) {
+  #controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    height: 60px;
+  }
 
-#monthtitle { font-size: 18px; }
-button { font-size: 14px; padding: 6px 10px; cursor: pointer; }
+  #monthtitle {
+    font-size: 20px;
+    font-weight: bold;
+    flex-grow: 1; /* 年月を中央寄せにするため広げる */
+    text-align: center;
+  }
 
-table {
-  height: calc(100% - 50px);
-}
+  button:not(.theme-dot-btn) {
+    font-size: 16px;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background: rgba(120, 120, 120, 0.1);
+    color: inherit;
+    border-radius: 6px;
+  }
 
-/* 🛠️【修正】テーブルの高さを単純に7等分（曜日+6行）する */
-tr {
-  height: calc(100% / 7);
-}
-
-th, td {
-  height: 100%;
-}
-
-.day-cell {
-  font-size: 15px;
+  table { height: calc(100% - 60px); }
+  tr { height: calc(100% / 7); }
+  th, td { height: 100%; }
+  .day-cell { font-size: 16px; }
 }
 
 /* ============================
-   ★ 横表示（Safari・PWA・アスペクト比対応）
+   横表示（ランドスケープ・無駄な余白を削減し最適化）
 ============================ */
 @media screen and (orientation: landscape), screen and (min-aspect-ratio: 1/1) {
-
   body {
-    /* ノッチの左右安全領域を確保 */
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
 
   #controls {
-    height: 120px; /* 横向き時のヘッダー高 */
-    gap: 20px;
-    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 中央にまとめる */
+    gap: 24px;              /* ボタン間のハッキリした間隔 */
+    padding: 0 20px;
+    height: 54px;           /* 🛠️ 高さを120pxから54pxへ大幅縮小（スマートに） */
+  }
+
+  /* 🛠️ 文字なしテーマボタンも横向き時は少し押しやすく拡大 */
+  .theme-dot-btn {
+    width: 32px;
+    height: 32px;
   }
 
   #monthtitle {
-    font-size: 36px;
+    font-size: 26px;        /* 🛠️ 視認性の高い大きさに調整 */
+    font-weight: bold;
+    min-width: 180px;       /* はみ出しを防ぎつつ中央を維持 */
+    text-align: center;
   }
 
-  button {
-    font-size: 24px;
-    padding: 12px 24px;
+  button:not(.theme-dot-btn) {
+    font-size: 20px;        /* 🛠️ 押しやすいように文字サイズをアップ */
+    padding: 4px 20px;
+    border: 1px solid #ccc;
+    background: rgba(120, 120, 120, 0.1);
+    color: inherit;
+    border-radius: 6px;
   }
 
   table {
-    height: calc(100% - 120px);
-    width: 100%; /* bodyのpaddingで制御されるため100%でOK */
+    height: calc(100% - 54px); /* ヘッダーの縮小に合わせてテーブルを拡大 */
+    width: 100%;
     margin: 0;
   }
 
-  /* 🛠️【修正】横向きもヘッダーを引いた高さを単純に7等分する */
   tr {
     height: calc(100% / 7);
   }
 
+  th, td {
+    height: 100%;
+  }
+
   .day-cell {
-    font-size: 20px;
+    font-size: 18px;       /* 横向き時の一マスの日付を大きく */
+  }
+  
+  .holiday-name {
+    font-size: 11px;       /* 祝日名も横向きで見やすく調整 */
   }
 }
