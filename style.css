@@ -1,28 +1,5 @@
 /* ============================
-   Light / Dark モード
-============================ */
-body.light {
-  background: #ffffff;
-  color: #333;
-}
-
-body.dark {
-  background: #222;
-  color: #eee;
-}
-
-body.light th {
-  background: #ddd;
-  color: #333;
-}
-
-body.dark th {
-  background: #444;
-  color: #eee;
-}
-
-/* ============================
-   ベースレイアウト（PWA対応）
+   ベース（PWAでもブラウザでも共通）
 ============================ */
 html, body {
   margin: 0;
@@ -34,27 +11,27 @@ html, body {
 }
 
 /* ============================
-   ヘッダー（縦横共通）
+   ヘッダー（縦横共通の初期値）
 ============================ */
 #controls {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px;
-  height: 60px; /* ← 縦表示の基準高さ */
+  gap: 8px;
+  padding: 6px;
+  height: 50px; /* ← 縦の基準 */
 }
 
 #monthtitle {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 button {
   font-size: 14px;
-  padding: 6px 12px;
+  padding: 6px 10px;
 }
 
 /* ============================
-   カレンダー表（縦横共通）
+   カレンダー表（共通）
 ============================ */
 table {
   width: 100%;
@@ -68,54 +45,25 @@ th, td {
 }
 
 .day-cell {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 /* ============================
-   曜日色
-============================ */
-.sunday { color: red; }
-.saturday { color: blue; }
-
-/* ============================
-   今日
-============================ */
-.today {
-  background: orange;
-  color: white !important;
-  border-radius: 4px;
-  font-weight: bold;
-}
-
-/* ============================
-   祝日
-============================ */
-.holiday {
-  color: red !important;
-  font-weight: bold;
-}
-
-.holiday-name {
-  display: block;
-  font-size: 10px;
-  margin-top: 2px;
-}
-
-/* ============================
-   ★ 縦表示（7行を自動割り当て）
+   ★ 縦表示（確実に7行を収める）
 ============================ */
 @media (orientation: portrait) {
 
   #controls {
-    height: 60px;
+    height: 50px;
   }
 
   table {
-    height: calc(100% - 60px); /* ← ヘッダーを引いた残りを全部使う */
+    height: calc(100% - 50px);
   }
 
+  /* 曜日＋6行＝7行で割る（縦は行を小さめにする） */
   tr {
-    height: calc((100% - 60px) / 7); /* ← 曜日＋6行＝7行で割る */
+    height: calc((100% - 50px) / 7);
   }
 
   th, td {
@@ -123,18 +71,24 @@ th, td {
   }
 
   .day-cell {
-    font-size: 18px;
+    font-size: 15px; /* ← 少し小さくして確実に収める */
   }
 }
 
 /* ============================
-   ★ 横表示（ヘッダー3倍＋高さ自動割り当て）
+   ★ 横表示（ヘッダー3倍＋ノッチ余白）
 ============================ */
 @media (orientation: landscape) {
 
+  /* ノッチの左右安全領域を確保 */
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
   #controls {
     height: 120px; /* ← 3倍の高さ */
-    gap: 24px;
+    gap: 20px;
     padding: 12px;
   }
 
@@ -148,7 +102,10 @@ th, td {
   }
 
   table {
-    height: calc(100% - 120px); /* ← ヘッダーが大きくなった分を引く */
+    height: calc(100% - 120px);
+    width: calc(100% - env(safe-area-inset-left) - env(safe-area-inset-right));
+    margin-left: env(safe-area-inset-left);
+    margin-right: env(safe-area-inset-right);
   }
 
   tr {
